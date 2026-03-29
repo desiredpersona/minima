@@ -1,0 +1,962 @@
+/* ==========================================================================
+   Minima — A minimal Jekyll theme
+   Modern CSS Design System
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light dark;
+
+  /* Typography */
+  --font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-code: "Menlo", "Inconsolata", "Consolas", "Roboto Mono", "Ubuntu Mono", "Liberation Mono", "Courier New", monospace;
+  --font-size: 16px;
+  --font-weight: 400;
+  --line-height: 1.5;
+  --small-font-size: 0.875rem;
+
+  /* Spacing */
+  --space: 30px;
+  --space-half: calc(var(--space) * 0.5);
+  --space-third: calc(var(--space) * 0.333);
+
+  /* Layout */
+  --content-width: 800px;
+
+  /* Colors — Light mode */
+  --color-brand: #818181;
+  --color-brand-light: #d8d8d8;
+  --color-brand-dimmed: #6b6b6b;
+  --color-brand-dark: #515151;
+
+  --color-site-title: #515151;
+
+  --color-text: #515151;
+  --color-heading: #111;
+  --color-bg: #fdfdfd;
+  --color-code-bg: #f6f8fa;
+
+  --color-link: #1e69d8;
+  --color-link-visited: #174fa0;
+  --color-link-hover: #515151;
+
+  --color-border: #d8d8d8;
+  --color-border-mid: #cecece;
+  --color-border-strong: #515151;
+
+  --color-table-text: #333;
+  --color-table-zebra: #efefef;
+  --color-table-header-bg: #e8e8e8;
+  --color-table-header-border: #c4c4c4;
+  --color-table-border: #d8d8d8;
+
+  /* Syntax Highlighting — Light mode */
+  --hl-error: #a61717;
+  --hl-error-bg: #e3d2d2;
+  --hl-comment: #9c9996;
+  --hl-generic-deleted: #e25050;
+  --hl-generic-heading: #999;
+  --hl-generic-inserted: #3f993f;
+  --hl-generic-output: #888;
+  --hl-generic-prompt: #555;
+  --hl-generic-error: #a00;
+  --hl-generic-traceback: #a00;
+  --hl-generic-subheading: #aaa;
+  --hl-keyword: #cf222e;
+  --hl-keyword-type: #445588;
+  --hl-name: #111;
+  --hl-name-attribute: #097e39;
+  --hl-name-builtin-pseudo: #999;
+  --hl-name-class: #097e39;
+  --hl-name-exception: #900;
+  --hl-name-function: #2c7d74;
+  --hl-name-constant: #a61154;
+  --hl-name-tag: #b81e63;
+  --hl-name-variable: #752a75;
+  --hl-operator: #0842a0;
+  --hl-number: #005a99;
+  --hl-string: #914d08;
+  --hl-string-regex: #009926;
+  --hl-string-symbol: #0842a0;
+  --hl-whitespace: #bbb;
+  --hl-lineno: #9c9996;
+  --hl-marked-bg: #ffffcc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-brand: #999;
+    --color-brand-light: #a3a3a3;
+    --color-brand-dimmed: #858585;
+    --color-brand-dark: #363636;
+
+    --color-site-title: #a3a3a3;
+
+    --color-text: #9a9a9a;
+    --color-heading: #bbb;
+    --color-bg: #181818;
+    --color-code-bg: #222;
+
+    --color-link: #5691cd;
+    --color-link-visited: #80bbff;
+    --color-link-hover: #9a9a9a;
+
+    --color-border: #363636;
+    --color-border-mid: #a3a3a3;
+    --color-border-strong: #999;
+
+    --color-table-text: #9a9a9a;
+    --color-table-zebra: #1f1f1f;
+    --color-table-header-bg: #282828;
+    --color-table-header-border: #333;
+    --color-table-border: #363636;
+
+    /* Syntax Highlighting — Dark mode */
+    --hl-error: #8c2121;
+    --hl-error-bg: #e3d2d2;
+    --hl-comment: #8a8a8a;
+    --hl-generic-deleted: #d85a5a;
+    --hl-generic-heading: #999;
+    --hl-generic-inserted: #4ec64e;
+    --hl-generic-output: #888;
+    --hl-generic-prompt: #555;
+    --hl-generic-error: #f07178;
+    --hl-generic-traceback: #f07178;
+    --hl-generic-subheading: #aaa;
+    --hl-keyword: #d85a7b;
+    --hl-keyword-type: #ffcb6b;
+    --hl-name: #c7d1d8;
+    --hl-name-attribute: #11a69f;
+    --hl-name-builtin-pseudo: #999;
+    --hl-name-class: #11a69f;
+    --hl-name-exception: #900;
+    --hl-name-function: #5ab780;
+    --hl-name-constant: #9d99e6;
+    --hl-name-tag: #de3581;
+    --hl-name-variable: #9680b1;
+    --hl-operator: #bcd890;
+    --hl-number: #9d99e6;
+    --hl-string: #baa94a;
+    --hl-string-regex: #009926;
+    --hl-string-symbol: #3c90f5;
+    --hl-whitespace: #eeffff;
+    --hl-lineno: #8a8a8a;
+    --hl-marked-bg: #373730;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Reset / Base
+   -------------------------------------------------------------------------- */
+
+html {
+  font-size: var(--font-size);
+}
+
+body, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, hr,
+dl, dd, ol, ul, figure {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: var(--font-weight) var(--font-size)/var(--line-height) var(--font-family);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-text-size-adjust: 100%;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  overflow-wrap: break-word;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Vertical Rhythm
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+ul, ol, dl, figure {
+  margin-block-end: var(--space-half);
+}
+
+hr {
+  margin-block: var(--space);
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Typography
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-heading);
+  font-weight: 500;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+
+  &:visited {
+    color: var(--color-link-visited);
+  }
+
+  &:hover {
+    color: var(--color-link-hover);
+    text-decoration: underline var(--color-brand);
+    text-underline-offset: 3px;
+  }
+}
+
+.social-media-list a:hover {
+  text-decoration: none;
+
+  & .username {
+    text-decoration: underline;
+  }
+}
+
+figcaption {
+  font-size: var(--small-font-size);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Images & Figures
+   -------------------------------------------------------------------------- */
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+figure > img {
+  display: block;
+}
+
+
+/* --------------------------------------------------------------------------
+   6. Lists
+   -------------------------------------------------------------------------- */
+
+ul, ol {
+  margin-inline-start: var(--space);
+}
+
+li > ul,
+li > ol {
+  margin-block-end: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. Blockquotes
+   -------------------------------------------------------------------------- */
+
+blockquote {
+  color: var(--color-brand);
+  border-inline-start: 4px solid var(--color-border);
+  padding-inline-start: var(--space-half);
+  font-size: 1.05rem;
+  font-style: italic;
+
+  & > :last-child {
+    margin-block-end: 0;
+  }
+
+  & i, & em {
+    font-style: normal;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   8. Code
+   -------------------------------------------------------------------------- */
+
+pre,
+code {
+  font-family: var(--font-family-code);
+  background-color: var(--color-code-bg);
+}
+
+pre {
+  padding: 8px 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--color-heading);
+  overflow-x: auto;
+
+  & > code {
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+div.highlight, figure.highlight {
+  margin-block-end: var(--space-half);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+
+  & pre {
+    margin: 0;
+  }
+
+  & table, & tbody, & th, & tr, & td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  & .lineno, & .gl {
+    text-align: right;
+  }
+}
+
+figure.highlight {
+  & table {
+    margin: -8px -12px -14px;
+  }
+
+  & td.gutter {
+    border-right: 1px solid var(--color-border);
+  }
+
+  & td.code {
+    width: 100%;
+  }
+}
+
+code.highlighter-rouge {
+  padding: 1px 5px;
+  font-size: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. Tables
+   -------------------------------------------------------------------------- */
+
+table {
+  margin-block-end: var(--space);
+  width: 100%;
+  text-align: left;
+  color: var(--color-table-text);
+  border-collapse: collapse;
+  border: 1px solid var(--color-table-border);
+
+  & tr:nth-child(even) {
+    background-color: var(--color-table-zebra);
+  }
+
+  & th, & td {
+    padding: calc(var(--space) * 0.333) var(--space-half);
+  }
+
+  & th {
+    background-color: var(--color-table-header-bg);
+    border: 1px solid var(--color-table-header-border);
+  }
+
+  & td {
+    border: 1px solid var(--color-table-border);
+  }
+}
+
+@media screen and (max-width: 800px) {
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   10. Wrapper
+   -------------------------------------------------------------------------- */
+
+.wrapper {
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--space);
+}
+
+.wrapper::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    padding-inline: calc(var(--space) * 0.6);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   11. Icons
+   -------------------------------------------------------------------------- */
+
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+  overflow: visible;
+}
+
+.svg-icon {
+  width: 1.25em;
+  height: 1.25em;
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+  overflow: visible;
+}
+
+
+/* --------------------------------------------------------------------------
+   12. Site Header
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  position: relative;
+  width: 100%;
+  min-height: calc(var(--space) * 1.865);
+  line-height: calc(var(--line-height) * var(--font-size) * 2.25);
+  background-color: var(--color-bg);
+  border-block-start: 5px solid var(--color-border-strong);
+  border-block-end: 1px solid var(--color-border);
+}
+
+.site-title {
+  font-size: 1.625rem;
+  font-weight: 300;
+  letter-spacing: -1px;
+  margin-block-end: 0;
+  float: left;
+
+  &, &:visited {
+    color: var(--color-site-title);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .site-title {
+    padding-inline-end: 45px;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   13. Site Navigation
+   -------------------------------------------------------------------------- */
+
+.site-nav {
+  float: right;
+  border: none;
+  background-color: inherit;
+
+  & label[for="nav-trigger"],
+  & #nav-trigger {
+    display: none;
+  }
+
+  & .nav-item {
+    color: var(--color-text);
+
+    &:not(:last-child) {
+      margin-inline-end: var(--space-half);
+    }
+  }
+}
+
+/* Mobile navigation */
+@media screen and (max-width: 600px) {
+  .site-nav {
+    position: absolute;
+    top: 9px;
+    right: calc(var(--space) * 0.6);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    text-align: right;
+
+    & label[for="nav-trigger"] {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+    }
+
+    & .menu-icon {
+      float: right;
+      width: 36px;
+      height: 26px;
+      line-height: 0;
+      padding-top: 10px;
+      text-align: center;
+    }
+
+    & .menu-icon .bar {
+      display: block;
+      width: 18px;
+      height: 2px;
+      margin: 0 auto 3px;
+      background-color: var(--color-border-strong);
+      border-radius: 1px;
+    }
+
+    & .menu-icon .bar:last-child {
+      margin-bottom: 0;
+    }
+
+    & #nav-trigger ~ .nav-items {
+      clear: both;
+      display: none;
+    }
+
+    & #nav-trigger:checked ~ .nav-items {
+      display: block;
+      padding-bottom: 5px;
+    }
+
+    & #nav-trigger:checked ~ .nav-items .nav-item {
+      margin-left: 20px;
+      padding: 5px 10px;
+    }
+
+    & .nav-item {
+      display: block;
+      margin-inline-end: var(--space-half);
+      padding: 5px 0;
+      color: var(--color-text);
+      line-height: var(--line-height);
+    }
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   14. Site Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  border-block-start: 1px solid var(--color-border);
+  padding-block: var(--space);
+}
+
+.footer-heading {
+  font-size: 1.125rem;
+  margin-block-end: var(--space-half);
+}
+
+.feed-subscribe .svg-icon {
+  padding: 5px 5px 2px 0;
+}
+
+.contact-list,
+.social-media-list {
+  list-style: none;
+  margin-inline-start: 0;
+}
+
+.footer-col-wrapper,
+.social-links {
+  font-size: 0.9375rem;
+  color: var(--color-brand-dimmed);
+}
+
+.footer-col {
+  margin-block-end: var(--space-half);
+}
+
+.footer-col-1,
+.footer-col-2 {
+  width: calc(50% - (var(--space) / 2));
+}
+
+.footer-col-3 {
+  width: calc(100% - (var(--space) / 2));
+}
+
+@media screen and (min-width: 800px) {
+  .footer-col-1 {
+    width: calc(35% - (var(--space) / 2));
+  }
+
+  .footer-col-2 {
+    width: calc(20% - (var(--space) / 2));
+  }
+
+  .footer-col-3 {
+    width: calc(45% - (var(--space) / 2));
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .footer-col-wrapper {
+    display: flex;
+  }
+
+  .footer-col {
+    width: calc(100% - (var(--space) / 2));
+    padding-inline: var(--space-half);
+
+    &:first-child {
+      padding-inline-end: var(--space-half);
+      padding-inline-start: 0;
+    }
+
+    &:last-child {
+      padding-inline-end: 0;
+      padding-inline-start: var(--space-half);
+    }
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   15. Page Content
+   -------------------------------------------------------------------------- */
+
+.page-content {
+  padding-block: var(--space);
+  flex: 1 0 auto;
+}
+
+.page-heading {
+  font-size: 2rem;
+}
+
+.post-list-heading {
+  font-size: 1.75rem;
+}
+
+.post-list {
+  margin-inline-start: 0;
+  list-style: none;
+
+  & > li {
+    margin-block-end: var(--space);
+  }
+}
+
+.post-meta {
+  font-size: var(--small-font-size);
+  color: var(--color-brand-dimmed);
+
+  & .bullet-divider {
+    padding-inline: 15px;
+  }
+
+  & .meta-label {
+    font-weight: 600;
+  }
+
+  & .force-inline {
+    display: inline;
+
+    &::before {
+      content: "\2022";
+      padding-inline: 5px;
+    }
+  }
+
+  & .post-authors {
+    margin-block-start: 3px;
+  }
+}
+
+.post-link {
+  display: block;
+  font-size: 1.5rem;
+}
+
+
+/* --------------------------------------------------------------------------
+   16. Posts
+   -------------------------------------------------------------------------- */
+
+.post-header {
+  margin-block-end: var(--space);
+  padding-block-end: 18px;
+  text-align: center;
+  border-block-end: 1px solid var(--color-border);
+}
+
+.post-title,
+.post-content h1 {
+  margin-block-end: 10px;
+  font-size: 2.625rem;
+  font-weight: var(--font-weight);
+  letter-spacing: -1px;
+  line-height: 1.15;
+}
+
+.post-content {
+  margin-block-end: var(--space);
+
+  & h1, & h2, & h3, & h4, & h5, & h6 {
+    margin-block-start: var(--space);
+  }
+
+  & h2 {
+    font-size: 1.75rem;
+  }
+
+  & h3 {
+    font-size: 1.375rem;
+  }
+
+  & h4 {
+    font-size: 1.25rem;
+  }
+
+  & h5 {
+    font-size: 1.125rem;
+  }
+
+  & h6 {
+    font-size: 1.0625rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .post-content h2 {
+    font-size: 2rem;
+  }
+
+  .post-content h3 {
+    font-size: 1.625rem;
+  }
+}
+
+.comments-disabled-message {
+  text-align: center;
+  font-weight: 300;
+}
+
+
+/* --------------------------------------------------------------------------
+   17. Social Media List
+   -------------------------------------------------------------------------- */
+
+.social-media-list {
+  display: table;
+  margin: 0 auto;
+
+  & li {
+    float: left;
+    min-width: 45px;
+    min-height: 45px;
+    text-align: center;
+    margin: 5px 10px 5px 0;
+
+    &:last-of-type {
+      margin-inline-end: 0;
+    }
+  }
+
+  & li a {
+    display: block;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+
+    &:hover {
+      border-color: var(--color-border-mid);
+    }
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   18. Pagination
+   -------------------------------------------------------------------------- */
+
+.pagination {
+  display: table;
+  margin: 0 auto;
+  list-style-type: none;
+
+  & li {
+    float: left;
+    margin: 0 3px;
+    min-width: 45px;
+    min-height: 45px;
+    text-align: center;
+  }
+
+  & li a {
+    display: block;
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+
+    &:hover {
+      border-color: var(--color-border-mid);
+    }
+  }
+
+  & li a, & li div {
+    min-width: 41px;
+    padding: 10px 12px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  & li div {
+    border: 1px solid transparent;
+  }
+
+  & li div.pager-edge {
+    color: var(--color-border);
+    border: 1px dashed;
+  }
+
+  & li div.current-page {
+    font-weight: bold;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   19. Task Lists
+   -------------------------------------------------------------------------- */
+
+.task-list {
+  margin-inline-start: 0;
+  padding-inline-start: calc(var(--space) * 0.6);
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item-checkbox {
+  position: relative;
+  margin-inline-end: calc(var(--space) * 0.3);
+  margin-inline-start: calc(var(--space) * -0.5);
+  appearance: none;
+  border: 8px solid var(--color-border);
+  vertical-align: text-top;
+  z-index: -1;
+
+  &::after {
+    position: absolute;
+    top: -8px;
+    left: -3px;
+    width: 4px;
+    height: 10px;
+    content: "";
+    border: solid transparent;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  &:checked::after {
+    border-color: var(--color-border-strong);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   20. Grid Helpers
+   -------------------------------------------------------------------------- */
+
+@media screen and (min-width: 800px) {
+  .one-half {
+    width: calc(50% - (var(--space) / 2));
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   21. Syntax Highlighting
+   -------------------------------------------------------------------------- */
+
+.highlight .err   { color: var(--hl-error-bg); background-color: var(--hl-error) }
+
+.highlight .c     { color: var(--hl-comment) }
+.highlight .cm    { color: var(--hl-comment) }
+.highlight .cp    { color: var(--hl-comment) }
+.highlight .c1    { color: var(--hl-comment) }
+.highlight .cs    { color: var(--hl-comment); font-style: italic }
+
+.highlight .gd    { color: var(--hl-generic-deleted) }
+.highlight .gd .x { color: var(--hl-generic-deleted) }
+.highlight .ge    { font-style: italic }
+.highlight .gh    { color: var(--hl-generic-heading) }
+.highlight .gi    { color: var(--hl-generic-inserted) }
+.highlight .gi .x { color: var(--hl-generic-inserted) }
+.highlight .go    { color: var(--hl-generic-output) }
+.highlight .gp    { color: var(--hl-generic-prompt) }
+.highlight .gr    { color: var(--hl-generic-error) }
+.highlight .gs    { font-weight: bold }
+.highlight .gt    { color: var(--hl-generic-traceback) }
+.highlight .gu    { color: var(--hl-generic-subheading) }
+
+.highlight .k     { color: var(--hl-keyword) }
+.highlight .kc    { color: var(--hl-keyword) }
+.highlight .kd    { color: var(--hl-keyword) }
+.highlight .kp    { color: var(--hl-keyword) }
+.highlight .kr    { color: var(--hl-keyword) }
+.highlight .kt    { color: var(--hl-keyword-type) }
+
+.highlight .n     { color: var(--hl-name) }
+.highlight .na    { color: var(--hl-name-attribute) }
+.highlight .nb    { color: var(--hl-keyword) }
+.highlight .bp    { color: var(--hl-name-builtin-pseudo) }
+.highlight .nc    { color: var(--hl-name-class) }
+.highlight .ne    { color: var(--hl-name-exception) }
+.highlight .nf    { color: var(--hl-name-function) }
+.highlight .ni    { color: var(--hl-name-attribute) }
+.highlight .nn    { color: var(--hl-name-class) }
+.highlight .no    { color: var(--hl-name-constant) }
+.highlight .nt    { color: var(--hl-name-tag) }
+.highlight .nv    { color: var(--hl-name-variable) }
+.highlight .vc    { color: var(--hl-name-variable) }
+.highlight .vg    { color: var(--hl-name-variable) }
+.highlight .vi    { color: var(--hl-name-variable) }
+
+.highlight .o     { color: var(--hl-operator) }
+.highlight .ow    { color: var(--hl-operator) }
+
+.highlight .m     { color: var(--hl-number) }
+.highlight .mf    { color: var(--hl-number) }
+.highlight .mh    { color: var(--hl-number) }
+.highlight .mi    { color: var(--hl-number) }
+.highlight .il    { color: var(--hl-number) }
+.highlight .mo    { color: var(--hl-number) }
+
+.highlight .s     { color: var(--hl-string) }
+.highlight .s1    { color: var(--hl-string) }
+.highlight .s2    { color: var(--hl-string) }
+.highlight .sb    { color: var(--hl-string) }
+.highlight .sc    { color: var(--hl-string) }
+.highlight .sd    { color: var(--hl-string) }
+.highlight .se    { color: var(--hl-string) }
+.highlight .sh    { color: var(--hl-string) }
+.highlight .si    { color: var(--hl-string) }
+.highlight .sr    { color: var(--hl-string-regex) }
+.highlight .ss    { color: var(--hl-string-symbol) }
+.highlight .sx    { color: var(--hl-string) }
+
+.highlight .w     { color: var(--hl-whitespace) }
+
+.highlight .lineno,
+.highlight .gl    { color: var(--hl-lineno) }
+.highlight .hll   { background-color: var(--hl-marked-bg) }
